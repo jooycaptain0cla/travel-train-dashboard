@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>火车行程看板</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="topbar">
+        <div>
+          <h1 id="appTitle">🚆 火车行程看板</h1>
+          <p id="appSubtitle">已从行程 DOCX 文档提取并整理</p>
+        </div>
+        <button id="langToggle" class="lang-toggle-btn" type="button" aria-label="切换到英文">中文 | EN</button>
+      </header>
+
+      <section class="stats" id="stats"></section>
+
+      <section class="card banner" id="findings"></section>
+
+      <section class="card">
+        <h2 id="sectionTitle">火车行程</h2>
+        <p class="section-subtitle" id="sectionSubtitle">桌面端显示表格，移动端显示卡片。</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th id="thDate">日期</th>
+                <th id="thRoute">路线</th>
+                <th id="thTrain">车次</th>
+                <th id="thDeparture">出发</th>
+                <th id="thArrival">到达</th>
+                <th id="thFrom">出发站（名称 + 地址）</th>
+                <th id="thTo">到达站（名称 + 地址）</th>
+                <th id="thDepPlatform">出发站台</th>
+                <th id="thArrPlatform">到达站台</th>
+                <th id="thLookup">站台查询</th>
+                <th id="thNotes">备注</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+
+        <div class="mobile-list" id="mobileCards"></div>
+      </section>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>

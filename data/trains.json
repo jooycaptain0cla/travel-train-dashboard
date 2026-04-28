@@ -1,0 +1,62 @@
+[
+  {
+    "date": "2026/5/30",
+    "route": "Paris-Gare-de-Lyon -> Lyon Part-Dieu",
+    "train_number": "Frecciarossa 6649",
+    "departure_time": "12:34",
+    "arrival_time": "14:30",
+    "departure_station": "Paris-Gare-de-Lyon（巴黎里昂站）",
+    "departure_address": "4 Place Louis Armand, 75012 Paris, France",
+    "arrival_station": "Lyon Part-Dieu（里昂帕丢站）",
+    "arrival_address": "5 Place Charles Béraudier, 69003 Lyon, France",
+    "source_excerpt": "日期：30/05/2026，   12:34 发车---14:30 到达"
+  },
+  {
+    "date": "2026/6/5",
+    "route": "Torino Porta Nuova -> Firenze S.M.Novella",
+    "train_number": "9927",
+    "departure_time": "09:30",
+    "arrival_time": "12:35",
+    "departure_station": "都灵新门车站 (Torino Porta Nuova)",
+    "departure_address": "Corso Vittorio Emanuele II, 10125 Torino, Italia",
+    "arrival_station": "佛罗伦萨圣母新车站 (Firenze S.M.Novella)",
+    "arrival_address": "Piazza della Stazione, 1, 50123 Firenze, Italia",
+    "source_excerpt": "时间09:30---12：35，，车次9927"
+  },
+  {
+    "date": "2026/6/5",
+    "route": "Firenze S.M.Novella -> Perugia",
+    "train_number": null,
+    "departure_time": "14:14",
+    "arrival_time": "16:21",
+    "departure_station": "Firenze S.M.Novella",
+    "departure_address": "Piazza della Stazione, 1, 50123 Firenze, Italia",
+    "arrival_station": "Perugia (Fontivegge)",
+    "arrival_address": "Piazza Vittorio Veneto, 06124 Perugia PG, Italia",
+    "source_excerpt": "Hours 14:14 ----Hours 16:21 - 05/06/2026"
+  },
+  {
+    "date": "2026/6/6",
+    "route": "Perugia -> Spello",
+    "train_number": "Regionale 4073",
+    "departure_time": "10:19",
+    "arrival_time": "10:51",
+    "departure_station": "Perugia (Perugia Fontivegge)",
+    "departure_address": "Piazza Vittorio Veneto, 06124 Perugia PG, Italia",
+    "arrival_station": "Spello",
+    "arrival_address": "Piazza della Repubblica, 06038 Spello PG, Italia",
+    "source_excerpt": "10：19 佩鲁贾  Perugia -----10：51斯佩洛Spello"
+  },
+  {
+    "date": "2026/6/7",
+    "route": "Spello -> Perugia",
+    "train_number": null,
+    "departure_time": "17:11",
+    "arrival_time": "17:42",
+    "departure_station": "Spello 斯佩罗火车站 (Stazione di Spello)",
+    "departure_address": "Via Stazione, 06038 Spello PG, Italia",
+    "arrival_station": "Perugia 佩鲁贾主站（Fontivegge） (Stazione Perugia Fontivegge)",
+    "arrival_address": "Piazza Vittorio Veneto, 06124 Perugia PG, Italia",
+    "source_excerpt": "发车：斯佩罗 Spello 17:11 | 到达：佩鲁贾 Perugia 17:42"
+  }
+]

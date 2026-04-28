@@ -1,0 +1,10 @@
+# macOS/Linux noise
+.DS_Store
+*.swp
+
+# Python
+__pycache__/
+*.pyc
+
+# Generated checks
+/tmp/

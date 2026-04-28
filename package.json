@@ -1,0 +1,10 @@
+{
+  "name": "travel-train-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hardcoded train timeline dashboard with platform lookup links.",
+  "scripts": {
+    "dev": "python3 -m http.server 4173",
+    "extract": "python3 scripts/extract_trains.py data/source/itinerary.docx data/trains.json"
+  }
+}
