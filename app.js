@@ -136,7 +136,8 @@ const I18N = {
       arrival: '到达',
       from: '出发站（名称 + 地址）',
       to: '到达站（名称 + 地址）',
-      depPlatform: '最新出发站台',
+      depPlatform: '出发站台',
+      arrPlatform: '到达站台',
       lookup: '站台查询',
       notes: '备注',
     },
@@ -168,10 +169,6 @@ const I18N = {
     lookupNoMatch: '未找到匹配车次，可能尚未放出或临时调整。',
     lookupFailed: '查询失败，请稍后重试。',
     lookupFilterUnsupported: '该查询页暂不支持自动过滤，已为你打开页面，请手动搜索车次：',
-    latestDepPlatformLabel: '最新出发站台',
-    sourceLive: '来源：实时查询',
-    sourceTicket: '来源：票面信息',
-    sourceUnknown: '来源：待确认',
     toggleLabel: '中文 | EN',
     toggleAria: '切换到英文',
   },
@@ -189,7 +186,8 @@ const I18N = {
       arrival: 'Arrival',
       from: 'From (Station + Address)',
       to: 'To (Station + Address)',
-      depPlatform: 'Latest Dep Platform',
+      depPlatform: 'Dep Platform',
+      arrPlatform: 'Arr Platform',
       lookup: 'Platform Lookup',
       notes: 'Notes',
     },
@@ -221,10 +219,6 @@ const I18N = {
     lookupNoMatch: 'No matching train found. It may not be posted yet or has changed.',
     lookupFailed: 'Lookup failed. Please try again shortly.',
     lookupFilterUnsupported: 'This lookup page does not support auto-filter yet. Page opened, please search train:',
-    latestDepPlatformLabel: 'Latest Departure Platform',
-    sourceLive: 'Source: live lookup',
-    sourceTicket: 'Source: ticket info',
-    sourceUnknown: 'Source: pending confirmation',
     toggleLabel: 'EN | 中文',
     toggleAria: 'Switch to Chinese',
   },
@@ -266,6 +260,7 @@ function applyStaticText() {
   setText('thFrom', t.headers.from);
   setText('thTo', t.headers.to);
   setText('thDepPlatform', t.headers.depPlatform);
+  setText('thArrPlatform', t.headers.arrPlatform);
   setText('thLookup', t.headers.lookup);
   setText('thNotes', t.headers.notes);
 
@@ -404,57 +399,6 @@ function renderLookupResult(index) {
   return `<div class="check-result"><div class="check-result-title">${t.lookupResultTitle}</div>${rows}</div>`;
 }
 
-function getLatestDeparturePlatform(index, leg) {
-  const state = platformCheckState[index];
-  if (state?.status === 'success' && state.matches?.length) {
-    const firstWithPlatform = state.matches.find((item) => item.platform) || state.matches[0];
-    return {
-      platform: firstWithPlatform.platform || null,
-      source: 'live',
-      time: firstWithPlatform.time || null,
-    };
-  }
-
-  if (leg.departurePlatform) {
-    return {
-      platform: leg.departurePlatform,
-      source: 'ticket',
-      time: null,
-    };
-  }
-
-  return {
-    platform: null,
-    source: 'unknown',
-    time: null,
-  };
-}
-
-function renderLatestDeparturePlatform(index, leg) {
-  const t = getT();
-  const latest = getLatestDeparturePlatform(index, leg);
-
-  if (latest.source === 'live') {
-    const timeText = latest.time ? `${t.lookupScheduled}: ${formatTimeFromIso(latest.time)}` : '';
-    return `
-      ${platformBadge(latest.platform)}
-      <div class="muted">${t.sourceLive}${timeText ? ` · ${timeText}` : ''}</div>
-    `;
-  }
-
-  if (latest.source === 'ticket') {
-    return `
-      ${platformBadge(latest.platform)}
-      <div class="muted">${t.sourceTicket}</div>
-    `;
-  }
-
-  return `
-    ${platformBadge(null)}
-    <div class="muted">${t.sourceUnknown}</div>
-  `;
-}
-
 async function checkPlatformNow(index) {
   const sorted = sortLegs(TRAIN_LEGS);
   const leg = sorted[index];
@@ -540,7 +484,6 @@ function renderTable(data) {
       const notes = d.notes?.[currentLang] || '';
       const resolvedTag = d.resolvedOnline ? `<div class="muted">${t.resolvedTag}</div>` : '';
       const lookupResult = renderLookupResult(index);
-      const latestDepPlatform = renderLatestDeparturePlatform(index, d);
       const lookup = d.platformLookupUrl
         ? `
           <div class="lookup-actions">
@@ -561,7 +504,8 @@ function renderTable(data) {
           <td>${d.arrivalTime}</td>
           <td>${stationCell(d.departureStation, d.departureAddress)}</td>
           <td>${stationCell(d.arrivalStation, d.arrivalAddress)}</td>
-          <td>${latestDepPlatform}</td>
+          <td>${platformBadge(d.departurePlatform)}</td>
+          <td>${platformBadge(d.arrivalPlatform)}</td>
           <td>${lookup}</td>
           <td>${notes}</td>
         </tr>
@@ -580,7 +524,6 @@ function renderMobileCards(data) {
       const notes = d.notes?.[currentLang] || '';
       const resolvedTag = d.resolvedOnline ? `<div class="muted">${t.resolvedTag}</div>` : '';
       const lookupResult = renderLookupResult(index);
-      const latestDepPlatform = renderLatestDeparturePlatform(index, d);
       const lookup = d.platformLookupUrl
         ? `
             <a class="link-btn" href="${d.platformLookupUrl}" target="_blank" rel="noreferrer">${t.lookupBtn}</a>
@@ -605,16 +548,13 @@ function renderMobileCards(data) {
             <div>
               <div class="mobile-label">${t.mobileDeparture}</div>
               <div class="mobile-value">${d.departureTime}</div>
+              <div class="muted">${platformBadge(d.departurePlatform)}</div>
             </div>
             <div>
               <div class="mobile-label">${t.mobileArrival}</div>
               <div class="mobile-value">${d.arrivalTime}</div>
+              <div class="muted">${platformBadge(d.arrivalPlatform)}</div>
             </div>
-          </div>
-
-          <div class="mobile-block">
-            <div class="mobile-label">${t.latestDepPlatformLabel}</div>
-            ${latestDepPlatform}
           </div>
 
           <div class="mobile-block">
